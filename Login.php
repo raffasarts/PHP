@@ -9,11 +9,11 @@
 <h2>Área Restrita</h2>
 <form action="valida.php" method="post">
 	
-	<label>Usuário</label><input type="text" name="usuario" placeholder="Digite o Nome do Usuário" required="true"> 
+	<label for="usuario">Usuário</label><input type="text" name="usuario" placeholder="Digite o Nome do Usuário" required="true"> 
 
 	<br><br>
 
-	<label> Senha</label>
+	<label for="senha"> Senha</label>
 	<input type="password" name="senha" placeholder="Digite sua senha" required="true">
 	<br>
 	<br>
