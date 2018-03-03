@@ -68,70 +68,30 @@
 	echo"<div class=\"container\">";
 	  
 
-		$SQL = "SELECT personagem.idPersonagem,personagem.idPai,personagem.idMae,personagem.nuques,personagem.galeoes,personagem.sicles, personagem.nomePersonagem, escolas.nomeEscola, personagem.idade, personagem.HP, personagem.MP, personagem.graduacao,personagem.idEscola, personagem.sangue,personagem.avatar, p.nomePersonagem AS 'nomePai',m.nomePersonagem AS 'nomeMae',personagem.criado, personagem.ultimoPost FROM personagem INNER JOIN escolas ON personagem.idEscola = escolas.idEscola INNER JOIN personagem p ON personagem.idPai = p.idPersonagem INNER JOIN personagem m ON personagem.idMae=m.idPersonagem"; 
+		$SQL = "SELECT personagem.*,escolas.nomeEscola, p.nomePersonagem AS 'nomePai',m.nomePersonagem AS 'nomeMae' FROM personagem INNER JOIN escolas ON personagem.idEscola = escolas.idEscola INNER JOIN personagem p ON personagem.idPai = p.idPersonagem INNER JOIN personagem m ON personagem.idMae=m.idPersonagem WHERE personagem.idUsuario=".$_SESSION['id_usuario'];
 		$result = mysqli_query($conexao,$SQL); 
 		$total = mysqli_num_rows($result);
 		
 
 		if ($total) {
 			
-
-			
-			echo"<table>";
+			echo("<table width=\"35%\" cellspacing=\"1\"><tbody>");
+		
 			while ($dados = mysqli_fetch_array($result)) 
 			{
+
 	 
 
-			echo"<div style=\"display:inline-block; width:auto; height:auto;\"class=\"personagem\">";
-			echo"<form action=\"validaPersonagem.php\" method=\"POST\">";
-			//Envia o id do Personagem
-			echo"<input type=\"hidden\" name=\"idPersonagem\"value=\"".$dados["idPersonagem"]."\">";
-			//Envia o nome do Personagem
-			echo"<input type=\"hidden\" name=\"NomePersonagem\"value=\"".$dados["nomePersonagem"]."\">";
-			//Envia o id da escola
-			echo"<input type=\"hidden\" name=\"escolaId\"value=\"".$dados["idEscola"]."\">";
-			//Envia o nome da escola
-			echo"<input type=\"hidden\" name=\"nomeEscola\"value=\"".$dados["nomeEscola"]."\">";
-			//Envia a idade
-			echo"<input type=\"hidden\" name=\"idade\"value=\"".$dados["idade"]."\">";
-
-			//Envia HP
-			echo"<input type=\"hidden\" name=\"HP\"value=\"".$dados["HP"]."\">";
-
-			//Envia MP
-			echo"<input type=\"hidden\" name=\"MP\"value=\"".$dados["MP"]."\">";
-
-			//Envia Graduação
-			echo"<input type=\"hidden\" name=\"graduacao\"value=\"".$dados["graduacao"]."\">";
-
-			//Envia Sangue
-			echo"<input type=\"hidden\" name=\"sangue\"value=\"".$dados["sangue"]."\">";
-
-			//Envia idPai
-			echo"<input type=\"hidden\" name=\"pai\"value=\"".$dados["idPai"]."\">";
-
-			//Envia idMãe
-			echo"<input type=\"hidden\" name=\"mae\"value=\"".$dados["idMae"]."\">";
-
-			//Envia Data de criação do personagem
-			echo"<input type=\"hidden\" name=\"dtcriacao\"value=\"".$dados["criado"]."\">";
-			//Envia Data em que foi feito o último post no personagem
-			echo"<input type=\"hidden\" name=\"dtultimopost\"value=\"".$dados["ultimoPost"]."\">";
-			//Envia galeões
-			echo"<input type=\"hidden\" name=\"galeoes\"value=\"".$dados["galeoes"]."\">";
-			//Envia nuques
-			echo"<input type=\"hidden\" name=\"nuques\"value=\"".$dados["nuques"]."\">";
-
-			//Envia sicles
-			echo"<input type=\"hidden\" name=\"sicles\"value=\"".$dados["sicles"]."\">";
-
-			// Exibe o avatar e redimensiona para o tamanho de 100px x 200px, exibindo o nome do personagem no atributo alt
-			echo "<div style=\"float:left;\"class=\"avatar\"><img src=\"https://".$dados["avatar"]."\" alt=\" Avatar do Personagem ".$dados["nomePersonagem"]."\" width=\"100px\" height=\"200px\"></div>";
-
-			echo"<div class=\"dados\"style=\"float:right; margin-left:5px;\">";
+			
 			
 
-			echo" <b>Nome: </b><a href=\"personagem.php?id=" . $dados["idPersonagem"] . "\">" . stripslashes($dados["nomePersonagem"])."</a><br>";
+			// Exibe o avatar e redimensiona para o tamanho de 100px x 200px, exibindo o nome do personagem no atributo alt
+			echo "<tr><td><div style=\"float:left; \"class=\"avatar\"><img src=\"https://".$dados["avatar"]."\" alt=\" Avatar do Personagem ".$dados["nomePersonagem"]."\" width=\"100px\" height=\"200px\"></div></td>";
+
+			
+			
+
+			echo" <td><b>Nome: </b><a href=\"personagem.php?id=" . $dados["idPersonagem"] . "\">" . stripslashes($dados["nomePersonagem"])."</a><br>";
 			if ($dados["idEscola"]=1) {
 				echo"<b>Escola: </b> Nenhuma<br>";
 			}
@@ -170,8 +130,18 @@
 				echo"<b>Último post em: </b> <br>";
 			}else{
 
-				echo"<b>Último post em: </b>". $ultimoPost->format('d/m/Y às H:i:s') ."<br>";
+				echo"<b>Último post em: </b>". $ultimoPost->format('d/m/Y  H:i:s') ."<br></td></tr>";
 			}
+
+			$ultimoLogin = DateTime::createFromFormat($format, $dados['ultimoLogin']);
+			if ($ultimoLogin<$criado) {
+				echo"<b>Último Login em: </b> <br>";
+			}else{
+
+				echo"<b>Último Login em: </b>". $ultimoLogin->format('d/m/Y  H:i:s') ."<br></td></tr>";
+			}
+
+			
 			while($dados["nuques"]>=29) {
 				$dados["nuques"]=$dados["nuques"]-29;
 				$dados["sicles"]++;
@@ -184,22 +154,49 @@
 			}
 
 			
+		
+
+
+			echo "<tr><td><div class=\"money\"><b>G$:</b> ".$dados["galeoes"]." <br><b>S$:</b>".$dados["sicles"]." <br><b>N$:</b> ".$dados["nuques"]."<br></div></td>";
+			
 			
 
-			echo "<div class=\"money\"><b>Galeões:</b> ".$dados["galeoes"]." <b>Sicles:</b>".$dados["sicles"]." <b>Nuques:</b> ".$dados["nuques"]."</div>";
 
-			echo"<input type=\"submit\" value=\"Logar\"";
-			echo "</form>";
+			echo "<td align=\"right\"><a href=\"validapersonagem.php?id=".$dados["idPersonagem"].
+			"&nome=".$dados["nomePersonagem"].
+			"&idade=".$dados["idade"].
+			"&HP=".$dados["HP"].
+			"&MP=".$dados["MP"].
+			"&sangue=".$dados["sangue"].
+			"&graduacao=".$dados["graduacao"].
+			"&idEscola=".$dados["idEscola"].
+			"&escola=".$dados["nomeEscola"].
+			"&idMae=".$dados["idMae"].
+			"&mae=".$dados["nomeMae"].
+			"&idPai=".$dados["idPai"].
+			"&pai=".$dados["nomePai"].
+			"&galeoes=".$dados["galeoes"].
+			"&sicles=".$dados["sicles"].
+			"&nuques=".$dados["nuques"].
+			"&avatar=".$dados["avatar"].
+			"&dtultimoPost=".$dados["ultimoPost"].
+			"&dtultimoLogin=".$dados["ultimoLogin"].
+			
+			"\"> Logar</a></td></tr>";
+
+
+			
 			
 
 			
-// Fecha tabela 
+
 			
 			 }			
 
-echo"</div>";
 
-			echo"</table>";
+
+
+			
 		} 
 			else 
 				{ 
@@ -210,9 +207,12 @@ echo"</div>";
 
 		
 		
-	echo "</div>"; 
-
+	 
+echo"</tbody></table>";
 echo"</div>";
+
+
+
 	?>
 
 
