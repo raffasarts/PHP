@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+			
+			<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="bower_components/bootstrap-validator/dist/validator.js"></script>
+
+	       <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	      
+	       
+	       		
+
+			<title>Cadastrar Usuário</title>
+		</head>
+	<body>
+		<a  href="#" data-toggle="modal" data-target="#modalFormulario">Cadastrar</a>
+		<div class="modal fade" id="modalFormulario">
+			   <div class="modal-dialog">
+		         <div class="modal-content">
+		             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                 <h4 class="modal-title">Cadastrar Usuário</h4>
+             </div>
+             <div class="modal-body">
+             	<form id="cadastro" data-toggle="validator" role="form" action="cadastroUser.php" method="POST">
+		   
+		   <div class="form-group has-feedback">
+			   <label for="inputName" class="control-label">Nome</label>
+			    
+			   <input type="text" 
+			   pattern="[^\d]{3,}\s[^\d]{3,}$" 
+			   class="form-control" 
+			   minlength="6" 
+			   id="inputName" 
+			   name="nome" 
+			   placeholder="Seu nome completo" 
+			   title="Por favor insira seu nome completo" 
+			   data-error="Por favor digite seu nome completo"
+			   required>
+			    
+			   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			   <div class="help-block with-errors"></div>
+
+
+		  </div>
+
+		  <div class="form-group has-feedback">
+			    <label for="inputEmail" class="control-label">Email</label>
+			    <input 
+			    type="email" 
+			    class="form-control" 
+			    id="inputEmail" 
+			    placeholder="exemplo@exemplo.com" 
+			    data-error="Email inválido ou já cadastrado"
+			    name="email" 
+			    data-remote="check.php?email=" 
+			    required pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])">
+			    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			    <div class="help-block with-errors" id=""></div>
+		  </div>
+
+		  <div class="form-group has-feedback">
+				    <label for="inputDate" class="control-label">Data de Nascimento</label>
+				    
+				    <input 
+				    type="date"  
+				    class="form-control" 
+				    min="1898-01-01" 
+				    max="2006-12-31" 
+				    id="inputDate"
+				    name="nascimento"
+				    title="Este jogo é recomendado para maiores de 12 anos" 
+				    data-error="Por favor insira uma data de nascimento válida" 
+				    required
+				     >
+				    
+				    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				    <div class="help-block with-errors"><span id="mensagem"></div>
+				    </div>
+
+	  		<div class="form-group has-feedback">
+			   <label for="inputLogin" class="control-label">Login</label>
+			    
+			   <input 
+			   type="text" 
+			   pattern="\w{4,}$" 
+			   class="form-control"
+			   minlength="4"
+			   id="inputLogin"
+			   placeholder="Login"
+			   required title="Nome que será usado para logar no jogo, deve possuir pelo menos 6 caracteres" 
+			   data-error="Login inválido ou já cadastrado" 
+			   name="login" 
+			   data-remote="check.php?login=">
+			    
+			   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			   <div class="help-block with-errors"></div>
+
+
+		  </div>
+
+		  <div class="form-group has-feedback">
+
+			    <label for="inputPassword" class="control-label">Senha</label>
+			    <span>(A senha deverá conter no minímo oito caracteres,uma letra maiuscula, uma letra minuscula,um número e um caracter especial (@#$%^+=))</span>
+
+			    <div class="form-inline row">
+					      <div class="form-group col-sm-6">
+
+
+					      <input 
+					      type="password" 
+					      minlength="8" 
+					      class="form-control" 
+					      id="inputPassword"
+					      name="senha" 
+					      placeholder="Senha" 
+					      title="No minimo oito caracteres com pelo menos um número, uma letra maiuscula, uma letra minuscula e um caracter especial(@#$%^+=) " 
+					      data-erro="No minimo 8 caracteres com pelo menos um número, uma letra maiuscula e uma minuscula"
+					      pattern="^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^+=]).*$" required > 
+					      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+					      <div class="help-block with-errors"> </div>
+				    </div>
+
+			      <div class="form-group col-sm-6">
+			        <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="As senhas não conferem" placeholder="Confirme sua senha" required name="csenha">
+			        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			        <div class="help-block with-errors" id="erroSenha"></div>
+			       </div>
+
+			    </div>
+			     
+		  </div>
+		  
+
+
+		  <div class="form-group">
+			    <div class="checkbox">
+				    <label>
+				    <input type="checkbox" id="termos" name="termos" data-error="Você deve aceitar os termos e condições para poder se Cadastrar" required>
+				        Declaro que li e aceito os <a  data-toggle="modal" data-target="#modalTermos">termos de utilização</a> do site
+				    </label>
+				    <div class="help-block with-errors"></div>
+		    	</div>
+
+		  </div>
+		  <div class="form-group">
+			    <div class="checkbox">
+				     <label>
+				     <input type="checkbox" id="dadosValidos" name="dadosValidos" data-error="Você deve confirmar que os dados são válidos" required>
+				        Declaro que todos os dados fornecidos neste formulário são válidos
+				     </label>
+			     <div class="help-block with-errors"></div>
+		    </div>
+		  </div>
+
+		    <div class="form-group">
+			    <div class="checkbox">
+				      <label>
+				        <input type="checkbox" name="newslater" id="newslater" >
+				        Aceito receber novidades e promoções de Raffas Arts Games e seus parceiros
+				      </label>
+				      <div class="help-block with-errors"></div>
+			    </div>
+		  </div>
+		  <div class="form-group">
+		    <button type="submit" class="btn btn-primary" value="Cadastrar">Cadastrar</button>
+		  </div>
+		</form>
+
+			
+
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+             </div>
+         </div>
+     </div>
+ </div>
+	<div class="modal fade" id="modalTermos">
+			   <div class="modal-dialog">
+		         <div class="modal-content">
+		             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                 <h4 class="modal-title">Termos de Uso</h4>
+             </div>
+             <div class="modal-body">
+                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum harum dolorem vel omnis, corporis accusamus reprehenderit sapiente sit magni eaque repudiandae nostrum neque delectus vero quae necessitatibus molestias voluptatem ipsum ipsam recusandae eos dignissimos? Eaque corporis nemo molestias at labore dolor eius nam hic praesentium incidunt! Eos quisquam beatae facilis debitis dicta maiores tempore libero hic, incidunt dignissimos nisi earum ea assumenda repellat porro est iure modi totam adipisci quas nesciunt nam asperiores. Eius sequi similique cupiditate delectus maiores mollitia exercitationem nulla nesciunt a? Ducimus, blanditiis omnis impedit minima molestias. Non error, ducimus distinctio sequi earum, eius reprehenderit, obcaecati magni fugiat officia ea aliquam iusto eveniet culpa quibusdam neque omnis odio tempora adipisci! Totam, repellendus dignissimos fugit ab atque quod vero omnis laudantium nesciunt distinctio tempora provident nostrum explicabo ea voluptas nihil iure. Laborum non illum harum. Dolores laboriosam iste, id mollitia, natus ea consequatur sapiente libero repellat fugit amet veniam aspernatur deleniti dignissimos iusto fugiat! Minus rerum aspernatur enim, facere voluptatum doloribus aut laboriosam quo quam, sunt vero quidem exercitationem expedita, tempora molestiae sint minima, ducimus ea possimus quos cum quae. Aperiam praesentium ea quaerat consectetur est, sint beatae expedita voluptate iusto sit illo iste dolores rerum quae earum laborum nulla sed amet consequatur necessitatibus perferendis asperiores magnam. Accusantium perferendis deleniti voluptate quos corrupti placeat sint impedit nihil. Et tempora molestias consequuntur odit doloremque voluptates modi ut incidunt fugit dolore officia nam, fuga repellat totam maiores, magnam reiciendis suscipit voluptatem animi unde quam cupiditate possimus repudiandae exercitationem. Iste exercitationem veniam omnis aliquid non sunt pariatur, quia ipsa rerum obcaecati temporibus hic magni iusto. Molestias architecto magni libero veritatis eveniet. Quos labore, natus. Nam aspernatur maiores numquam tempore sed quaerat, reprehenderit, perspiciatis necessitatibus nihil ex fugit quae! Dolorum deleniti repellat accusamus commodi dolores iusto iure, vel perspiciatis consequuntur eos ea rerum dolor hic laboriosam, adipisci sed possimus. Soluta ipsum tempore, itaque exercitationem repellendus facere fugit optio quas qui, explicabo veniam atque delectus quod enim quidem cupiditate. Fuga sit commodi blanditiis ad tempora impedit magni pariatur placeat vitae maiores cumque, neque reprehenderit deleniti perferendis suscipit ratione incidunt, earum explicabo, quisquam perspiciatis consequatur eaque illo? Dolores consectetur ad tenetur voluptatem, molestiae sed ipsam doloribus vero quae voluptatum. Eos iusto eaque reiciendis sequi iure. Sapiente deserunt architecto voluptatum aspernatur, fugiat consectetur doloribus aperiam velit dicta sit perferendis omnis quo iure sed, voluptatibus explicabo? Provident totam quisquam aut eveniet eligendi, nulla magnam consequuntur minima doloremque neque facere suscipit voluptatem a cupiditate ad vel ab doloribus sunt! Dolorum ratione eos ex tenetur exercitationem et, adipisci unde dignissimos tempora obcaecati. Eos facilis atque ad dicta, et velit eveniet deleniti aliquam dolor sapiente nihil, eius perspiciatis officia commodi asperiores molestias! Temporibus, facere quos porro voluptatem nihil nemo aliquam inventore veniam optio sed laudantium dolorem ad natus consequuntur, nisi labore dolore omnis. Adipisci nihil odit labore temporibus itaque blanditiis, quis possimus cumque commodi, aliquam repellat, suscipit dignissimos ducimus. Obcaecati inventore ad doloribus aperiam impedit delectus, illo, optio quasi quos tempore autem facilis labore, consequatur perspiciatis. Tempora cupiditate, dolore perspiciatis illum quibusdam! Laudantium rerum cum, laborum aliquam dicta, ad modi, eligendi ducimus reprehenderit cumque illo! A rem eaque ducimus esse accusamus eos officiis explicabo expedita fugiat sed tempore ad perferendis aut laboriosam sapiente, excepturi voluptatibus enim totam iure amet consectetur. Consequatur commodi blanditiis, incidunt tenetur repellendus culpa aut? Placeat dolorum nisi dolore, veniam distinctio iste at aperiam, voluptatibus ipsum veritatis in tempore perferendis sint consequuntur ad ea possimus. Dicta perspiciatis explicabo ad iure alias possimus ea iusto voluptate eveniet voluptatum, sapiente laudantium tempore ducimus quasi vitae aperiam officia quaerat molestiae est consectetur, non totam asperiores animi! Dicta, soluta, unde. Labore dignissimos ipsum eos eligendi maiores quisquam sed animi, illo quos pariatur dolorum dolore omnis iusto aut odio doloremque sit hic est quod mollitia odit, eius corrupti placeat. Non illo rem eos dolor repellat itaque optio nam vitae culpa sapiente facilis modi, harum quia sequi aut cum aliquam dolores dolore quidem, vero magnam doloribus inventore rerum odio. Non ad asperiores, a culpa dicta recusandae corporis, magnam quia obcaecati repellat modi tempora, nisi esse fugit repudiandae labore iure dignissimos cumque error voluptatem aliquid id, laudantium odit beatae! Amet illum suscipit quam facere corrupti. Beatae quisquam a error distinctio ratione, dicta iure sunt facere nemo saepe vitae enim optio dolorem iusto aperiam eveniet quod, libero explicabo, animi! Explicabo eum saepe similique omnis modi molestias nulla sunt, neque at quidem sapiente perspiciatis autem, nam asperiores quae nesciunt. Ab obcaecati, delectus ea, doloremque asperiores id officiis autem perspiciatis vitae consequuntur repudiandae adipisci qui porro sunt fugit at voluptas nobis possimus. Nulla repudiandae laboriosam fuga temporibus, similique, laudantium ipsum, culpa eligendi labore, nisi qui ab dolore. Repellendus vitae consectetur fuga sunt odit voluptas quam ab molestias, officiis minima modi sapiente provident aliquid enim eveniet esse asperiores dignissimos aspernatur deleniti deserunt totam placeat, quibusdam, repudiandae id dolorem! Numquam fugiat rerum, aperiam vel tempora deserunt pariatur eius hic quo qui corrupti, adipisci nostrum illum quod nemo molestiae incidunt debitis facere beatae ab quae veniam neque! Id sint libero exercitationem vitae molestias quidem debitis recusandae excepturi dicta adipisci dolores laudantium natus cupiditate voluptas, aliquid culpa consequuntur dolore nam? Modi ipsam obcaecati dolores, dignissimos temporibus officia nisi facilis, mollitia recusandae ullam, magnam porro possimus tempora ex fugiat quae. Cumque repellendus in veniam aut quas natus sint vitae recusandae nesciunt quaerat sit quis laboriosam nam, non architecto, labore vero aperiam, quisquam corporis nihil. Dolorem inventore id animi placeat. Sed alias neque provident harum iusto aut eaque totam nisi adipisci deleniti voluptatem assumenda, quas dicta inventore, est veniam maxime temporibus ut molestiae. Aut recusandae minima cum nesciunt quae corporis quasi ut modi? Sint nesciunt quia placeat sit a assumenda voluptates totam. Asperiores, non, unde! Sequi perferendis consequatur mollitia soluta rerum porro iste assumenda at rem veritatis excepturi ipsam, magnam necessitatibus quae nesciunt ad quia, quibusdam repellat dolorum non itaque sint quisquam voluptate commodi. Vel illum sapiente id velit saepe aliquid, est quasi laboriosam suscipit voluptas nostrum culpa voluptatem expedita asperiores sit aut. At, ratione, velit. Ipsa, voluptate magni pariatur itaque sapiente.</p>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+             </div>
+         </div>
+     </div>
+
+	</body>
+	</html>
+		

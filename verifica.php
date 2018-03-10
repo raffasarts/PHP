@@ -4,9 +4,9 @@ session_start();
 
 //verifica se existe dados na sessão de login
 
-if (!isset($_SESSION["id_usuario"]) || !isset($_SESSION["usuario"])) {
+if (!isset($_SESSION["logado"]))  {
 	//usuário não logado redireciona para a página de login
-	header("Location: login.php");
+	header("Location: index.html");
 	exit;
 }
 
